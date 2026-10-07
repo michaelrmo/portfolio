@@ -1,0 +1,8 @@
+node_modules/
+.svelte-kit/
+dist/
+.sites-runtime/
+.env
+.env.*
+!.env.example
+.DS_Store
