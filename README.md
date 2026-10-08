@@ -1,6 +1,6 @@
 # Michael Moroz
 
-A personal portfolio built with SvelteKit and TypeScript. Every page is rendered to static HTML at build time; it requires no server, database, third-party font requests or client-side JavaScript.
+A personal portfolio built with SvelteKit and TypeScript. The page is rendered to static HTML at build time; it requires no server, database, third-party font requests or client-side JavaScript.
 
 ## Development
 
@@ -21,32 +21,19 @@ npm run preview
 
 The deployable site is written to `dist/`. Serve this directory with any static web host.
 
-## Design options
+## Design
 
-- `/`: the experimental design, with oversized typography, tilted project sheets, scroll reveals and an interactive network illustration.
-- `/colour/`: the chosen colour design, with smooth section scrolling and no skills section.
-- `/experimental/`: an experimental design with oversized typography, tilted project sheets, scroll reveals and an interactive network illustration.
-- `/sidebar/`: the previous design with a sticky introduction and native expandable experience entries.
-- `/simple/`: the original single-column design, saved for comparison. This route is excluded from search indexing.
+The portfolio at `/` uses oversized typography, tilted project sheets, scroll reveals and an interactive network illustration. It is the sole design on `main`; the earlier design pages and branches have been removed.
 
-All designs use the same content in `src/lib/content.ts` and work without client-side JavaScript. Comparison routes are excluded from search indexing. The current designs omit the skills section. Section links use native smooth scrolling, and motion respects the visitor's reduced-motion preference.
+Section links use native smooth scrolling, and motion respects the visitor's reduced-motion preference. The network uses native radio controls: Still pauses it in place, Orbit resumes its rotation, and Scatter smoothly rearranges the nodes.
 
-The options are also preserved on separate Git branches:
-
-- `design/simple`: original single-column design.
-- `design/sidebar`: previous sidebar design.
-- `main` and `design/colour`: the chosen colour design, with the other designs available as comparison routes.
-- `design/experimental`: the experimental design at `/`, with the chosen colour design at `/colour/`.
-
-Fraunces and Public Sans are hosted locally in `static/fonts/`; their SIL Open Font Licences are included alongside them. Older design routes retain their original typography.
+Fraunces and Public Sans are hosted locally in `static/fonts/`; their SIL Open Font Licences are included alongside them.
 
 ## Editing
 
 - `src/lib/content.ts`: biography, projects, experience, education and skills.
-- `src/routes/+page.svelte`: layout, metadata and styling.
-- `src/routes/simple/+page.svelte`: saved original layout.
-- `src/routes/sidebar/+page.svelte`: saved sidebar layout.
-- `src/lib/ExperimentalPortfolio.svelte`: experimental layout and styling.
+- `src/routes/+page.svelte`: the portfolio entry page.
+- `src/lib/Portfolio.svelte`: layout, metadata and styling.
 - `src/lib/NetworkPlayground.svelte`: native radio controls and animated SVG network.
 - `src/lib/ProjectGlyph.svelte`: small SVG icons for the three project types.
 - `static/michael-moroz-cv.pdf`: downloadable CV.

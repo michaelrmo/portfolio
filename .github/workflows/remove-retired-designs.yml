@@ -1,0 +1,71 @@
+name: Remove retired portfolio design branches
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/remove-retired-designs.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Remove the merged design branches
+        env:
+          PORTFOLIO_REPOSITORY_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.error, urllib.parse, urllib.request
+
+          repository = os.environ['GITHUB_REPOSITORY']
+          assert repository == 'michaelrmo/portfolio'
+          assert os.environ['GITHUB_REF'] == 'refs/heads/main'
+          expected = {
+              'design/colour': '71f0e931a04c0a08c9fbb517dc44654f829ca53c',
+              'design/experimental': 'c7c6d5ca9f64ee7d4f189f76b7d2b6bcc63777be',
+              'design/sidebar': '454ad8af7a9e6c618644e23c3785816588ba7c95',
+              'design/simple': 'e0c13ae734eadd862c787f3cc0479b49849585d5'
+          }
+
+          def request(path, method='GET'):
+              url = 'https://api.github.com/repos/' + repository + '/' + path
+              headers = {
+                  'Accept': 'application/vnd.github+json',
+                  'Authorization': 'Bearer ' + os.environ['PORTFOLIO_REPOSITORY_TOKEN'],
+                  'X-GitHub-Api-Version': '2022-11-28'
+              }
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url, headers=headers, method=method), timeout=30) as response:
+                      data = response.read()
+                      return response.status, json.loads(data) if data else None
+              except urllib.error.HTTPError as error:
+                  if error.code == 404:
+                      return 404, None
+                  raise
+
+          _, main = request('git/ref/heads/main')
+          assert main['object']['sha'] == os.environ['GITHUB_SHA'], 'Main advanced; stop before deleting branches'
+          pending = []
+          for branch, sha in expected.items():
+              path = 'git/ref/heads/' + urllib.parse.quote(branch, safe='/')
+              status, ref = request(path)
+              if status == 404:
+                  print(branch + ' already removed')
+                  continue
+              assert ref['ref'] == 'refs/heads/' + branch
+              assert ref['object']['sha'] == sha, branch + ' advanced; preserve its changes'
+              _, comparison = request('compare/' + sha + '...' + os.environ['GITHUB_SHA'])
+              assert comparison['status'] in ('ahead', 'identical'), branch + ' has unmerged work'
+              pending.append(branch)
+
+          for branch in pending:
+              path = 'git/refs/heads/' + urllib.parse.quote(branch, safe='/')
+              status, _ = request(path, method='DELETE')
+              assert status == 204
+              status, _ = request('git/ref/heads/' + urllib.parse.quote(branch, safe='/'))
+              assert status == 404
+              print('Removed ' + branch)
+          PY

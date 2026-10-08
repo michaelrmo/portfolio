@@ -12,7 +12,6 @@
 
 <svelte:head>
   <title>Michael Moroz | Computer Science & Mathematics</title>
-  <meta name="robots" content="noindex" />
   <meta name="description" content="Michael Moroz, Computer Science and Mathematics student at the University of Edinburgh. Projects in multiplayer networking, reinforcement learning and web development." />
   <meta property="og:title" content="Michael Moroz" />
   <meta property="og:description" content="Computer Science and Mathematics at the University of Edinburgh. Projects, experience and CV." />
@@ -47,8 +46,6 @@
     </div>
     <NetworkPlayground />
   </section>
-
-  <!-- <div class="location-strip"><span>University of Edinburgh</span><span>Edinburgh, UK</span><a href="#projects">Explore the projects <span aria-hidden="true">↓</span></a></div> -->
 
   <main id="content" tabindex="-1">
     <section id="projects" aria-labelledby="projects-heading">
@@ -129,8 +126,6 @@
   .profile-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem; margin-top: 1.4rem; font-size: 0.8125rem; }
   .profile-links a { text-decoration: none; }
   .profile-links span { margin-left: 0.2rem; color: #923447; }
-  .location-strip { border-top: 1px solid #263c30; border-bottom: 1px solid #263c30; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-size: 0.75rem; padding: 1rem 0; }
-  .location-strip a { text-decoration: none; }
   main { outline: none; }
   main > section { padding-top: 4rem; }
   .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem 2rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
@@ -208,8 +203,6 @@
     .eyebrow { margin-bottom: 1.25rem; font-size: 0.6875rem; }
     .bio { margin-top: 1.5rem; }
     .hero :global(.playground) { width: min(100%, 23rem); margin: auto; }
-    .location-strip { justify-content: start; font-size: 0.6875rem; }
-    .location-strip a { flex-basis: 100%; }
     main > section { padding-top: 2.75rem; }
     .section-heading { margin-bottom: 1.75rem; gap: 0.75rem; }
     .section-heading p br { display: none; }
@@ -231,7 +224,7 @@
   @media print {
     :global(body) { color: #222; background: #fff; font-size: 10pt; }
     .canvas { width: 100%; }
-    .topbar, .skip-link, .location-strip, .project-mark, footer, .hero :global(.playground) { display: none; }
+    .topbar, .skip-link, .project-mark, footer, .hero :global(.playground) { display: none; }
     .hero { display: block; padding: 0; }
     h1 { font-size: 2rem; line-height: 1.2; }
     h1 > span { display: inline; }

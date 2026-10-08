@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ExperimentalPortfolio from '$lib/ExperimentalPortfolio.svelte';
+  import Portfolio from '$lib/Portfolio.svelte';
 </script>
 
-<ExperimentalPortfolio />
+<Portfolio />
