@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { education, experience, profile, projects, skills } from '$lib/content';
+  import { education, experience, profile, projects } from '$lib/content';
   import ProjectGlyph from '$lib/ProjectGlyph.svelte';
 
   const sections = [
     { id: 'projects', label: 'Projects' },
     { id: 'experience', label: 'Experience' },
-    { id: 'education', label: 'Education' },
-    { id: 'skills', label: 'Skills' }
+    { id: 'education', label: 'Education' }
   ];
   const projectStyles = [
     { theme: 'green', category: 'Multiplayer & learning', glyph: 'network' },
@@ -113,14 +112,6 @@
       </div>
     </section>
 
-    <section id="skills" class="information-section skills-section" aria-labelledby="skills-heading">
-      <div class="section-heading"><h2 id="skills-heading">Technical skills</h2></div>
-      <dl>
-        {#each skills as skill}
-          <div><dt>{skill.label}</dt><dd>{skill.items}</dd></div>
-        {/each}
-      </dl>
-    </section>
   </main>
 
   <footer>
@@ -133,7 +124,7 @@
   @font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/public-sans-latin.woff2') format('woff2'); }
   @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/fraunces-latin.woff2') format('woff2'); }
   :global(*) { box-sizing: border-box; }
-  :global(html) { scroll-padding-top: 2rem; }
+  :global(html) { scroll-padding-top: 2rem; scroll-behavior: smooth; }
   :global(body) { margin: 0; background: #faf9f5; color: #434c46; font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1rem; line-height: 1.7; -webkit-font-smoothing: antialiased; }
   :global(::selection) { background: #f6cf80; color: #173e32; }
   :global(a) { color: #214f3d; text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
@@ -161,8 +152,7 @@
   .section-links a:hover { color: #b44425; text-decoration: underline; }
   :global(body:has(#projects:target)) .section-links a[href='#projects'],
   :global(body:has(#experience:target)) .section-links a[href='#experience'],
-  :global(body:has(#education:target)) .section-links a[href='#education'],
-  :global(body:has(#skills:target)) .section-links a[href='#skills'] { color: #b44425; text-decoration: underline; }
+  :global(body:has(#education:target)) .section-links a[href='#education'] { color: #b44425; text-decoration: underline; }
   .cv-link { display: flex; align-items: baseline; gap: 0.55rem; color: #b44425; text-decoration: none; font-weight: 500; padding: 0.35rem 0; }
   .file-type { color: #61685e; font-size: 0.6875rem; font-weight: 400; }
   main { outline: none; }
@@ -207,12 +197,7 @@
   .entry-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.25rem 1rem; }
   .education-entries article + article { margin-top: 1.75rem; }
   .qualification { margin: 0.25rem 0 0; }
-  .skills-section { background: #f1ecdf; border-top: 0; padding: 1.75rem; grid-template-columns: minmax(0, 15.25rem) minmax(0, 1fr); }
-  dl { margin: 0; }
-  dl > div + div { margin-top: 1.1rem; }
-  dt { color: #674832; font-weight: 500; font-size: 0.8125rem; margin-bottom: 0.15rem; }
-  dd { margin: 0; }
-  footer { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 2rem; padding: 1.75rem 0 2.25rem; font-size: 0.8125rem; }
+  footer { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 2rem; border-top: 1px solid #c7ccc1; margin-top: 3.3rem; padding: 1.75rem 0 2.25rem; font-size: 0.8125rem; }
   footer a { color: #61685e; text-decoration: none; overflow-wrap: anywhere; }
   .footer-name { font-family: 'Fraunces', Georgia, serif; font-size: 1.1rem; color: #173e32; }
   .footer-name span { font-family: 'Public Sans', sans-serif; font-size: 0.75rem; margin-left: 0.4rem; color: #b44425; }
@@ -226,7 +211,6 @@
     .project-cover { padding: 1.2rem; }
     .project-cover h3 { font-size: 1.65rem; }
     .information-section { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
-    .skills-section { padding: 1.5rem; }
   }
   @media (max-width: 600px) {
     .page { width: calc(100% - 2.5rem); }
@@ -250,9 +234,9 @@
     .project-description { padding: 0; }
     .project-bottom { margin-top: 1rem; gap: 0.6rem 1.25rem; }
     .information-section { margin-top: 2.5rem; padding-top: 1.5rem; }
-    .skills-section { padding: 1.3rem; }
     footer { align-items: start; gap: 0.5rem 1rem; }
   }
+  @media (prefers-reduced-motion: reduce) { :global(html) { scroll-behavior: auto; } }
   @media print {
     .page { width: 100%; }
     header { padding-top: 0; }
@@ -266,7 +250,6 @@
     .project-cover h3 { font-size: 1.4rem; margin-top: 0.5rem; }
     .project-cover a, .project-label, .project-status { color: #222; }
     .information-section { grid-template-columns: 12rem minmax(0, 1fr); gap: 1.25rem; margin-top: 1.5rem; padding-top: 1rem; }
-    .skills-section { background: transparent; padding: 0; }
     details, .education-entries article { break-inside: avoid; }
     details:not([open]) > .entry-description { display: block; }
     :global(body) { background: #fff; color: #222; font-size: 10pt; }
