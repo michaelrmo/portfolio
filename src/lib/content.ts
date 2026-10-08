@@ -9,7 +9,7 @@ export interface Project {
 
 export const profile = {
   name: 'Michael Moroz',
-  email: 's2967259@ed.ac.uk',
+  email: 'michaelmoroz@morozmichael.com',
   github: 'https://github.com/michaelrmo',
   linkedin: 'https://www.linkedin.com/in/michael-r-moroz',
   introduction: 'I’m studying Computer Science and Mathematics at the University of Edinburgh. I build web applications and simulations, and I’m currently working on multiplayer football and multi-agent reinforcement learning.'
