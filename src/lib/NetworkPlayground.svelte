@@ -42,7 +42,7 @@
   .outer-ring, .inner-ring { fill: none; stroke: #a7b19a; stroke-width: 1; }
   .inner-ring { stroke-dasharray: 3 7; }
   .connections { fill: none; stroke: #7b8f71; stroke-width: 1; transition: opacity 400ms; }
-  .orbit { transform-origin: 200px 200px; }
+  .orbit { transform-origin: 200px 200px; animation: turn 28s linear infinite; animation-play-state: paused; }
   .node { stroke: #263c30; stroke-width: 1.5; transition: transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1); }
   .node circle + circle { fill: #263c30; }
   .node path { fill: none; }
@@ -50,7 +50,7 @@
   .core text { fill: #d5ed78; font-family: 'Fraunces', Georgia, serif; font-size: 37px; letter-spacing: -3px; }
   .crosshair { stroke: #263c30; stroke-width: 1; }
   figcaption { font-size: 0.6875rem; text-align: center; color: #536152; }
-  .playground:has(#network-orbit:checked) .orbit { animation: turn 28s linear infinite; }
+  .playground:has(#network-orbit:checked) .orbit { animation-play-state: running; }
   .playground:has(#network-scatter:checked) .a { transform: translate(30px, 23px); }
   .playground:has(#network-scatter:checked) .b { transform: translate(-12px, 57px); }
   .playground:has(#network-scatter:checked) .c { transform: translate(-24px, -32px); }
@@ -59,6 +59,6 @@
   .playground:has(#network-scatter:checked) .f { transform: translate(-62px, 26px); }
   .playground:has(#network-scatter:checked) .connections { opacity: 0.18; }
   @keyframes turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .playground:has(#network-orbit:checked) .orbit { animation: none; } .node, .connections { transition: none; } }
-  @media print { fieldset, figcaption { display: none; } .playground:has(#network-orbit:checked) .orbit { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .orbit { animation: none; } .node, .connections { transition: none; } }
+  @media print { fieldset, figcaption { display: none; } .orbit { animation: none; } }
 </style>
