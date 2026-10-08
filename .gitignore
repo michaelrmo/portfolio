@@ -6,6 +6,7 @@ node_modules/
 dist/
 build/
 .vite/
+.sites-runtime/
 
 # Local environment files
 .env
