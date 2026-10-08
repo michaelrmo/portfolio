@@ -25,7 +25,7 @@
     <g class="core"><circle cx="200" cy="200" r="49" /><text x="200" y="212" text-anchor="middle">mm.</text></g>
     <path class="crosshair" d="M200 20v12m0 336v12M20 200h12m336 0h12" />
   </svg>
-  <figcaption>Connections, in a different arrangement.</figcaption>
+  <figcaption>Connections in a different arrangement.</figcaption>
 </figure>
 
 <style>

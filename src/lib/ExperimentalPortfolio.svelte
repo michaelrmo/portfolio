@@ -48,7 +48,7 @@
     <NetworkPlayground />
   </section>
 
-  <div class="location-strip"><span>University of Edinburgh</span><span>Edinburgh, UK</span><a href="#projects">Explore the projects <span aria-hidden="true">↓</span></a></div>
+  <!-- <div class="location-strip"><span>University of Edinburgh</span><span>Edinburgh, UK</span><a href="#projects">Explore the projects <span aria-hidden="true">↓</span></a></div> -->
 
   <main id="content" tabindex="-1">
     <section id="projects" aria-labelledby="projects-heading">
