@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { education, experience, profile, projects } from '$lib/content';
   import ProjectGlyph from '$lib/ProjectGlyph.svelte';
   import NetworkPlayground from '$lib/NetworkPlayground.svelte';
@@ -16,8 +17,9 @@
   <meta property="og:title" content="Michael Moroz" />
   <meta property="og:description" content="Computer Science and Mathematics at the University of Edinburgh. Projects, experience and CV." />
   <meta property="og:type" content="website" />
-  <link rel="preload" href="/fonts/public-sans-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={`${base}/fonts/public-sans-latin.woff2`} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={`${base}/fonts/fraunces-latin.woff2`} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="stylesheet" href={`${base}/fonts/fonts.css`} />
 </svelte:head>
 
 <a class="skip-link" href="#content">Skip to content</a>
@@ -28,7 +30,7 @@
     <nav class="section-links" aria-label="On this page">
       <a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#education">Education</a>
     </nav>
-    <a class="cv-link" href="/michael-moroz-cv.pdf" download="Michael-Moroz-CV.pdf">CV <span aria-hidden="true">↓</span></a>
+    <a class="cv-link" href={`${base}/michael-moroz-cv.pdf`} download="Michael-Moroz-CV.pdf">CV <span aria-hidden="true">↓</span></a>
   </div>
 </header>
 
@@ -94,8 +96,6 @@
 </footer>
 
 <style>
-  @font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/public-sans-latin.woff2') format('woff2'); }
-  @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/fraunces-latin.woff2') format('woff2'); }
   :global(*) { box-sizing: border-box; }
   :global(html) { scroll-behavior: smooth; scroll-padding-top: 7rem; }
   :global(body) { margin: 0; font-family: 'Public Sans', sans-serif; color: #263c30; background: #f6f1e5; font-size: 1rem; line-height: 1.7; -webkit-font-smoothing: antialiased; }
