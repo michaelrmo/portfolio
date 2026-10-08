@@ -15,6 +15,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # configure-pages reads the site's URL and base path, including in private repos.
+      pages: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
