@@ -1,5 +1,3 @@
-# Michael Moroz
-
 A personal portfolio built with SvelteKit and TypeScript. The page is rendered to static HTML at build time; it requires no server, database, third-party font requests or client-side JavaScript.
 
 ## Development
@@ -20,23 +18,6 @@ npm run preview
 ```
 
 The deployable site is written to `dist/`. Serve this directory with any static web host.
-
-## GitHub Pages
-
-1. In the GitHub repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**.
-2. Push these changes to `main`. The workflow in `.github/workflows/deploy.yml` checks, builds and deploys `dist/`. You can also run it manually from the Actions tab.
-3. For `michaelrmo/portfolio`, the default site URL is `https://michaelrmo.github.io/portfolio/`.
-
-The workflow reads the base path from GitHub Pages, so asset and CV links also work if the repository is renamed or a custom domain is configured. Local development uses `/` by default.
-
-To check the repository subpath locally:
-
-```sh
-BASE_PATH=/portfolio npm run build
-BASE_PATH=/portfolio npm run preview
-```
-
-Open `http://localhost:4173/portfolio/`. For a custom domain, configure it in **Settings → Pages** and rerun the workflow.
 
 ## Design
 
