@@ -19,12 +19,21 @@ npm run build
 npm run preview
 ```
 
-The deployable site is written to `dist/`. Serve this directory with any static web host. `.openai/hosting.json` configures the private Sites preview and can be omitted when using a different host.
+The deployable site is written to `dist/`. Serve this directory with any static web host.
+
+## Design options
+
+- `/`: the expanded design with a sticky introduction, numbered navigation, project icons and native expandable experience entries.
+- `/simple/`: the original single-column design, saved for comparison. This route is excluded from search indexing.
+
+Both designs use the same content in `src/lib/content.ts` and work without client-side JavaScript. The `design/simple` Git branch also preserves the original project before the redesign.
 
 ## Editing
 
 - `src/lib/content.ts`: biography, projects, experience, education and skills.
 - `src/routes/+page.svelte`: layout, metadata and styling.
+- `src/routes/simple/+page.svelte`: saved original layout.
+- `src/lib/ProjectGlyph.svelte`: small SVG icons for the three project types.
 - `static/michael-moroz-cv.pdf`: downloadable CV.
 - `docs/cv.tex`: the supplied CV source, with the missing end of the Experience list corrected.
 - `docs/cv-print.html`: accessible, print-ready version of the CV used to generate the included PDF.
