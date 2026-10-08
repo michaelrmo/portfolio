@@ -23,7 +23,8 @@ The deployable site is written to `dist/`. Serve this directory with any static 
 
 ## Design options
 
-- `/`: the colour design, with a wider introduction, Fraunces and Public Sans typography, and green, blue and orange project panels.
+- `/`: the experimental design, with oversized typography, tilted project sheets, scroll reveals and an interactive network illustration.
+- `/colour/`: the chosen colour design, with smooth section scrolling and no skills section.
 - `/experimental/`: an experimental design with oversized typography, tilted project sheets, scroll reveals and an interactive network illustration.
 - `/sidebar/`: the previous design with a sticky introduction and native expandable experience entries.
 - `/simple/`: the original single-column design, saved for comparison. This route is excluded from search indexing.
