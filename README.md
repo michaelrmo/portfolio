@@ -1,6 +1,6 @@
 # Michael Moroz
 
-A personal portfolio built with SvelteKit and TypeScript. The entire page is rendered to static HTML at build time; it requires no server, database, external fonts or client-side JavaScript.
+A personal portfolio built with SvelteKit and TypeScript. Every page is rendered to static HTML at build time; it requires no server, database, third-party font requests or client-side JavaScript.
 
 ## Development
 
@@ -23,16 +23,24 @@ The deployable site is written to `dist/`. Serve this directory with any static 
 
 ## Design options
 
-- `/`: the expanded design with a sticky introduction, numbered navigation, project icons and native expandable experience entries.
+- `/`: the colour design, with a wider introduction, Fraunces and Public Sans typography, and green, blue and orange project panels.
+- `/sidebar/`: the previous design with a sticky introduction and native expandable experience entries.
 - `/simple/`: the original single-column design, saved for comparison. This route is excluded from search indexing.
 
-Both designs use the same content in `src/lib/content.ts` and work without client-side JavaScript. The `design/simple` Git branch also preserves the original project before the redesign.
+All three designs use the same content in `src/lib/content.ts` and work without client-side JavaScript. Both comparison routes are excluded from search indexing. The options are also preserved on separate Git branches:
+
+- `design/simple`: original single-column design.
+- `design/sidebar`: previous sidebar design.
+- `design/colour`: current colour design, with both previous designs available as comparison routes.
+
+Fraunces and Public Sans are hosted locally in `static/fonts/`; their SIL Open Font Licences are included alongside them. Older design routes retain their original typography.
 
 ## Editing
 
 - `src/lib/content.ts`: biography, projects, experience, education and skills.
 - `src/routes/+page.svelte`: layout, metadata and styling.
 - `src/routes/simple/+page.svelte`: saved original layout.
+- `src/routes/sidebar/+page.svelte`: saved sidebar layout.
 - `src/lib/ProjectGlyph.svelte`: small SVG icons for the three project types.
 - `static/michael-moroz-cv.pdf`: downloadable CV.
 - `docs/cv.tex`: the supplied CV source, with the missing end of the Experience list corrected.

@@ -3,12 +3,16 @@
   import ProjectGlyph from '$lib/ProjectGlyph.svelte';
 
   const sections = [
-    { id: 'projects', label: 'Projects', number: '01' },
-    { id: 'experience', label: 'Experience', number: '02' },
-    { id: 'education', label: 'Education', number: '03' },
-    { id: 'skills', label: 'Technical skills', number: '04' }
+    { id: 'projects', label: 'Projects' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'education', label: 'Education' },
+    { id: 'skills', label: 'Skills' }
   ];
-  const glyphs = ['network', 'chart', 'code'] as const;
+  const projectStyles = [
+    { theme: 'green', category: 'Multiplayer & learning', glyph: 'network' },
+    { theme: 'blue', category: 'Simulation & data', glyph: 'chart' },
+    { theme: 'orange', category: 'Full-stack web', glyph: 'code' }
+  ] as const;
 </script>
 
 <svelte:head>
@@ -17,71 +21,77 @@
   <meta property="og:title" content="Michael Moroz" />
   <meta property="og:description" content="Computer Science and Mathematics at the University of Edinburgh. Projects, experience and CV." />
   <meta property="og:type" content="website" />
+  <link rel="preload" href="/fonts/public-sans-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
 <a class="skip-link" href="#content">Skip to content</a>
 
-<main id="content" class="layout" tabindex="-1">
-  <div class="sidebar">
-    <header class="introduction">
-      <img class="monogram" src="/favicon.svg" alt="" width="32" height="32" />
-      <h1>{profile.name}</h1>
-      <p class="location">Edinburgh, UK</p>
-      <p class="bio">{profile.introduction}</p>
+<div class="page">
+  <header>
+    <div class="masthead">
+      <span class="identity"><span class="monogram" aria-hidden="true">mm.</span> Edinburgh, UK</span>
       <nav class="profile-links" aria-label="Contact and profiles">
         <a href={'mailto:' + profile.email}>Email</a>
-        <a href={profile.github}>GitHub</a>
-        <a href={profile.linkedin}>LinkedIn</a>
-        <a href="/michael-moroz-cv.pdf" download="Michael-Moroz-CV.pdf">CV <span class="file-type">PDF</span></a>
+        <a href={profile.github}>GitHub <span aria-hidden="true">↗</span></a>
+        <a href={profile.linkedin}>LinkedIn <span aria-hidden="true">↗</span></a>
       </nav>
-    </header>
-    <nav class="section-links" aria-label="On this page">
-      {#each sections as section}
-        <a class="section-link" href={'#' + section.id}>
-          <span class="nav-number" aria-hidden="true">{section.number}</span>
-          <span>{section.label}</span>
-        </a>
-      {/each}
-    </nav>
-  </div>
+    </div>
 
-  <div class="main-column">
-    <section id="projects" aria-labelledby="projects-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">01</span>
-        <h2 id="projects-heading">Selected projects</h2>
-        <span class="heading-rule" aria-hidden="true"></span>
+    <div class="introduction">
+      <div class="name-block">
+        <p class="discipline">Computer Science & Mathematics</p>
+        <h1>{profile.name}</h1>
       </div>
-      {#each projects as project, index}
-        <article class="project">
-          <div class="project-glyph"><ProjectGlyph kind={glyphs[index] ?? 'code'} /></div>
-          <div class="project-content">
-            <div class="entry-heading">
+      <p class="bio">{profile.introduction}</p>
+    </div>
+
+    <div class="navigation-row">
+      <nav class="section-links" aria-label="On this page">
+        {#each sections as section}
+          <a href={'#' + section.id}>{section.label}</a>
+        {/each}
+      </nav>
+      <a class="cv-link" href="/michael-moroz-cv.pdf" download="Michael-Moroz-CV.pdf">Download CV <span class="file-type">PDF</span><span aria-hidden="true">↓</span></a>
+    </div>
+  </header>
+
+  <main id="content" tabindex="-1">
+    <section id="projects" aria-labelledby="projects-heading" class="projects-section">
+      <div class="section-heading">
+        <h2 id="projects-heading">Selected projects</h2>
+        <span class="section-note">Code, simulations & experiments</span>
+      </div>
+
+      <div class="projects">
+        {#each projects as project, index}
+          {@const style = projectStyles[index] ?? projectStyles[2]}
+          <article class="project {style.theme}">
+            <div class="project-cover">
+              <div class="project-label"><ProjectGlyph kind={style.glyph} /><span>{style.category}</span></div>
               <h3><a href={project.href}>{project.name}</a></h3>
-              {#if project.note}<span class="entry-meta">{project.note}</span>{/if}
+              {#if project.note}<p class="project-status">{project.note}</p>{/if}
             </div>
-            <p class="stack">{project.stack}</p>
-            <p>{project.description}</p>
-            <p>{project.contribution}</p>
-          </div>
-        </article>
-      {/each}
+            <div class="project-description">
+              <p>{project.description}</p>
+              <p>{project.contribution}</p>
+              <div class="project-bottom">
+                <p class="stack">{project.stack}</p>
+                <a href={project.href} aria-label={'View ' + project.name + ' source on GitHub'}>Source <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+        {/each}
+      </div>
     </section>
 
-    <section id="experience" aria-labelledby="experience-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">02</span>
-        <h2 id="experience-heading">Experience</h2>
-        <span class="heading-rule" aria-hidden="true"></span>
-      </div>
-      <div class="timeline">
+    <section id="experience" class="information-section" aria-labelledby="experience-heading">
+      <div class="section-heading"><h2 id="experience-heading">Experience</h2></div>
+      <div class="entries">
         {#each experience as item, index}
-          <details class="timeline-entry" open={index === 0}>
+          <details open={index === 0}>
             <summary>
-              <span class="summary-text">
-                <span class="entry-title">{item.role}</span>
-                <span class="organisation">{item.organisation}</span>
-              </span>
+              <span class="summary-text"><span class="entry-title">{item.role}</span><span class="organisation">{item.organisation}</span></span>
               <span class="disclosure" aria-hidden="true"></span>
             </summary>
             <p class="entry-description">{item.description}</p>
@@ -90,19 +100,12 @@
       </div>
     </section>
 
-    <section id="education" aria-labelledby="education-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">03</span>
-        <h2 id="education-heading">Education</h2>
-        <span class="heading-rule" aria-hidden="true"></span>
-      </div>
-      <div class="timeline">
+    <section id="education" class="information-section" aria-labelledby="education-heading">
+      <div class="section-heading"><h2 id="education-heading">Education</h2></div>
+      <div class="entries education-entries">
         {#each education as item}
-          <article class="timeline-entry education-entry">
-            <div class="entry-heading">
-              <h3>{item.institution}</h3>
-              <span class="entry-meta">{item.period}</span>
-            </div>
+          <article>
+            <div class="entry-heading"><h3>{item.institution}</h3><span class="entry-meta">{item.period}</span></div>
             <p class="qualification">{item.qualification}</p>
             <p class="entry-description">{item.detail}</p>
           </article>
@@ -110,128 +113,163 @@
       </div>
     </section>
 
-    <section id="skills" aria-labelledby="skills-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">04</span>
-        <h2 id="skills-heading">Technical skills</h2>
-        <span class="heading-rule" aria-hidden="true"></span>
-      </div>
+    <section id="skills" class="information-section skills-section" aria-labelledby="skills-heading">
+      <div class="section-heading"><h2 id="skills-heading">Technical skills</h2></div>
       <dl>
         {#each skills as skill}
           <div><dt>{skill.label}</dt><dd>{skill.items}</dd></div>
         {/each}
       </dl>
     </section>
+  </main>
 
-    <footer>
-      <span>{profile.name}</span>
-      <a href={'mailto:' + profile.email}>{profile.email}</a>
-    </footer>
-  </div>
-</main>
+  <footer>
+    <a class="footer-name" href="#top" aria-label="Back to the top">Michael Moroz <span aria-hidden="true">↑</span></a>
+    <a href={'mailto:' + profile.email}>{profile.email}</a>
+  </footer>
+</div>
 
 <style>
+  @font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/public-sans-latin.woff2') format('woff2'); }
+  @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/fraunces-latin.woff2') format('woff2'); }
   :global(*) { box-sizing: border-box; }
-  :global(html) { scroll-padding-top: 3rem; }
-  :global(body) { margin: 0; background: #fff; color: #505760; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1rem; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-  :global(::selection) { background: #deebf6; color: #213e57; }
-  :global(a) { color: #2c648f; text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
-  :global(a:hover) { color: #163d5b; }
-  :global(a:focus-visible), summary:focus-visible { outline: 2px solid #2c648f; outline-offset: 5px; border-radius: 1px; }
-  .skip-link { position: absolute; top: -8rem; left: 1rem; padding: 0.5rem 1rem; background: #fff; z-index: 2; }
+  :global(html) { scroll-padding-top: 2rem; }
+  :global(body) { margin: 0; background: #faf9f5; color: #434c46; font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1rem; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  :global(::selection) { background: #f6cf80; color: #173e32; }
+  :global(a) { color: #214f3d; text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
+  :global(a:hover) { text-decoration: underline; }
+  :global(a:focus-visible), summary:focus-visible { outline: 2px solid #b44425; outline-offset: 5px; }
+  .skip-link { position: absolute; top: -8rem; left: 1rem; padding: 0.6rem 1rem; background: #faf9f5; z-index: 2; }
   .skip-link:focus { top: 1rem; }
-  .layout { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5.5rem); width: min(100% - 5rem, 65rem); margin: 0 auto; padding: 5rem 0 2.5rem; outline: none; }
-  .sidebar { position: sticky; top: 3.5rem; align-self: start; max-height: calc(100vh - 7rem); overflow-y: auto; scrollbar-width: thin; }
-  .monogram { display: block; width: 2rem; height: 2rem; margin-bottom: 1.35rem; }
-  h1 { margin: 0; color: #222c35; font-family: Georgia, 'Times New Roman', serif; font-size: 2.9rem; font-weight: 400; letter-spacing: -0.04em; line-height: 1.1; }
-  .location { color: #65717d; font-size: 0.875rem; margin: 0.8rem 0 1.4rem; }
-  .bio { margin: 0; line-height: 1.8; }
-  .profile-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.65rem 1.1rem; margin-top: 1.4rem; font-size: 0.875rem; }
-  .profile-links a { display: inline-block; min-height: 1.5rem; }
-  .file-type { font-size: 0.75rem; color: #65717d; margin-left: 0.15rem; }
-  .section-links { display: grid; gap: 0.2rem; margin-top: 2.7rem; }
-  .section-link { display: flex; align-items: baseline; gap: 0.9rem; border-left: 2px solid #e6ebef; padding: 0.4rem 0.85rem; color: #6b7580; font-size: 0.875rem; text-decoration: none; }
-  .nav-number { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #84929f; }
-  .section-link:hover { border-left-color: #2c648f; color: #2c648f; }
-  :global(body:has(#projects:target)) .section-link[href='#projects'],
-  :global(body:has(#experience:target)) .section-link[href='#experience'],
-  :global(body:has(#education:target)) .section-link[href='#education'],
-  :global(body:has(#skills:target)) .section-link[href='#skills'] { color: #2c648f; border-left-color: #2c648f; }
-  .main-column { min-width: 0; padding-top: 0.2rem; }
-  section + section { margin-top: 3.4rem; }
-  .section-heading { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.8rem; }
-  .section-number { color: #2c648f; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.875rem; line-height: 1; }
-  h2 { color: #222c35; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.075em; line-height: 1.6; text-transform: uppercase; margin: 0; }
-  .heading-rule { height: 1px; flex: 1; background: #e6ebef; margin-left: 0.15rem; }
-  h3, .entry-title { color: #29323b; font-size: 1rem; font-weight: 600; line-height: 1.6; margin: 0; }
-  h3 a { color: inherit; text-decoration: none; }
-  h3 a:hover { color: #2c648f; text-decoration: underline; }
-  .project { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 0.85rem; }
-  .project + .project { margin-top: 1.65rem; padding-top: 1.65rem; border-top: 1px solid #e6ebef; }
-  .project-glyph { color: #397099; margin-top: 0.1rem; }
-  .entry-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 0.3rem 1rem; }
-  .entry-meta { font-size: 0.8125rem; color: #65717d; flex-shrink: 0; }
-  .project p { margin: 0.8rem 0 0; }
-  .project .stack { margin-top: 0.2rem; color: #65717d; font-size: 0.875rem; }
-  .timeline { margin-left: 0.3rem; border-left: 1px solid #d9e2e9; }
-  .timeline-entry { position: relative; padding: 0 0 1.6rem 1.5rem; }
-  .timeline-entry:last-child { padding-bottom: 0; }
-  .timeline-entry::before { content: ''; position: absolute; width: 0.625rem; height: 0.625rem; left: calc(-0.3125rem - 0.5px); top: 0.45rem; border: 1.5px solid #5b86a7; background: #fff; border-radius: 50%; }
-  summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; cursor: pointer; list-style: none; }
+  .page { width: min(100% - 5rem, 65rem); margin: 0 auto; }
+  header { padding-top: 2.25rem; }
+  .masthead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem 2rem; font-size: 0.8125rem; color: #61685e; }
+  .identity { display: flex; align-items: baseline; gap: 1rem; }
+  .monogram { color: #b44425; font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 500; letter-spacing: -0.08em; line-height: 1; }
+  .profile-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; }
+  .profile-links a { text-decoration: none; padding: 0.3rem 0; }
+  .profile-links a:hover { text-decoration: underline; }
+  .profile-links span { margin-left: 0.2rem; color: #b44425; }
+  .introduction { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: 3rem; padding: 4.4rem 0 3.25rem; }
+  .discipline { margin: 0 0 0.8rem; color: #61685e; font-size: 0.875rem; }
+  h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-optical-sizing: auto; color: #173e32; font-size: clamp(2.7rem, 5.5vw, 4.4rem); letter-spacing: -0.055em; line-height: 1.08; margin: 0; }
+  .name-block::after { display: block; content: ''; width: 3.4rem; height: 5px; background: #df6b3e; margin-top: 1.65rem; }
+  .bio { margin: 0; font-size: 1rem; line-height: 1.85; }
+  .navigation-row { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 1rem 2rem; border-top: 1px solid #c7ccc1; border-bottom: 1px solid #c7ccc1; padding: 0.85rem 0; font-size: 0.8125rem; }
+  .section-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.75rem; }
+  .section-links a { color: #434c46; text-decoration: none; padding: 0.35rem 0; }
+  .section-links a:hover { color: #b44425; text-decoration: underline; }
+  :global(body:has(#projects:target)) .section-links a[href='#projects'],
+  :global(body:has(#experience:target)) .section-links a[href='#experience'],
+  :global(body:has(#education:target)) .section-links a[href='#education'],
+  :global(body:has(#skills:target)) .section-links a[href='#skills'] { color: #b44425; text-decoration: underline; }
+  .cv-link { display: flex; align-items: baseline; gap: 0.55rem; color: #b44425; text-decoration: none; font-weight: 500; padding: 0.35rem 0; }
+  .file-type { color: #61685e; font-size: 0.6875rem; font-weight: 400; }
+  main { outline: none; }
+  section { scroll-margin-top: 1rem; }
+  .projects-section { padding-top: 2.4rem; }
+  .section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem 1rem; flex-wrap: wrap; }
+  h2 { margin: 0; font-size: 0.875rem; font-weight: 600; color: #173e32; line-height: 1.5; }
+  .section-note { font-size: 0.75rem; color: #61685e; }
+  .projects { margin-top: 1.5rem; }
+  .project { --cover: #234c3d; --cover-detail: #d9ecd9; --accent: #214f3d; display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+  .project.blue { --cover: #305779; --cover-detail: #deebfa; --accent: #305779; }
+  .project.orange { --cover: #a4482c; --cover-detail: #ffe3ce; --accent: #a4482c; }
+  .project + .project { border-top: 1px solid #dce0d6; margin-top: 1.75rem; padding-top: 1.75rem; }
+  .project-cover { background: var(--cover); color: #fff; padding: 1.35rem 1.5rem 1.5rem; min-height: 11rem; }
+  .project-label { display: flex; align-items: center; gap: 0.6rem; color: var(--cover-detail); font-size: 0.6875rem; line-height: 1.5; }
+  .project-label :global(svg) { width: 1.1rem; height: 1.1rem; flex-shrink: 0; }
+  .project-cover h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-size: 1.85rem; line-height: 1.2; letter-spacing: -0.025em; margin: 1.5rem 0 0; overflow-wrap: anywhere; }
+  .project-cover a { color: #fff; text-decoration: none; }
+  .project-cover a:hover { text-decoration: underline; }
+  .project-cover a:focus-visible { outline-color: #fff; }
+  .project-status { color: var(--cover-detail); font-size: 0.6875rem; margin: 0.65rem 0 0; }
+  .project-description { padding: 0.1rem 0; }
+  .project-description > p { margin: 0; }
+  .project-description > p + p { margin-top: 0.75rem; }
+  .project-bottom { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 1.25rem; font-size: 0.75rem; }
+  .stack { margin: 0; color: #61685e; }
+  .project-bottom a { color: var(--accent); white-space: nowrap; text-decoration: none; }
+  .project-bottom a:hover { text-decoration: underline; }
+  .information-section { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); column-gap: 2.5rem; border-top: 1px solid #c7ccc1; margin-top: 3.3rem; padding-top: 1.75rem; }
+  .information-section > .section-heading { align-self: start; padding-top: 0.25rem; }
+  .entries { min-width: 0; }
+  details + details { border-top: 1px solid #dce0d6; margin-top: 1.35rem; padding-top: 1.35rem; }
+  summary { display: flex; justify-content: space-between; align-items: start; gap: 1rem; list-style: none; cursor: pointer; }
   summary::-webkit-details-marker { display: none; }
-  .summary-text { display: grid; gap: 0.15rem; }
-  .organisation { color: #65717d; font-size: 0.875rem; }
-  .disclosure { position: relative; flex: 0 0 1rem; width: 1rem; height: 1.5rem; color: #65717d; }
-  .disclosure::before, .disclosure::after { content: ''; position: absolute; background: currentColor; width: 0.625rem; height: 1px; left: 0.2rem; top: 0.75rem; }
-  .disclosure::after { transform: rotate(90deg); }
-  details[open] .disclosure::after { transform: rotate(0); }
-  summary:hover .entry-title, summary:hover .disclosure { color: #2c648f; }
-  .entry-description { margin: 0.7rem 0 0; }
+  .summary-text { display: grid; gap: 0.2rem; }
+  .entry-title, .entry-heading h3 { margin: 0; color: #263c31; font-size: 1rem; font-weight: 600; line-height: 1.6; }
+  .organisation, .entry-meta { color: #61685e; font-size: 0.8125rem; }
+  .disclosure { flex: 0 0 0.45rem; height: 0.45rem; border-right: 1px solid #b44425; border-bottom: 1px solid #b44425; transform: rotate(45deg); margin: 0.4rem 0.25rem 0 0; }
+  details[open] .disclosure { transform: rotate(225deg); margin-top: 0.65rem; }
+  summary:hover .entry-title { color: #b44425; }
+  .entry-description { margin: 0.75rem 0 0; }
+  .entry-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.25rem 1rem; }
+  .education-entries article + article { margin-top: 1.75rem; }
   .qualification { margin: 0.25rem 0 0; }
-  .education-entry .entry-heading { flex-wrap: wrap; gap: 0.15rem 1rem; }
+  .skills-section { background: #f1ecdf; border-top: 0; padding: 1.75rem; grid-template-columns: minmax(0, 15.25rem) minmax(0, 1fr); }
   dl { margin: 0; }
-  dl > div { display: grid; grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr); gap: 0.4rem 1rem; margin-top: 1rem; }
-  dt { color: #29323b; font-size: 0.875rem; font-weight: 500; }
+  dl > div + div { margin-top: 1.1rem; }
+  dt { color: #674832; font-weight: 500; font-size: 0.8125rem; margin-bottom: 0.15rem; }
   dd { margin: 0; }
-  footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; border-top: 1px solid #e6ebef; margin-top: 3rem; padding-top: 1rem; color: #65717d; font-size: 0.8125rem; }
-  footer a { color: inherit; }
+  footer { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 2rem; padding: 1.75rem 0 2.25rem; font-size: 0.8125rem; }
+  footer a { color: #61685e; text-decoration: none; overflow-wrap: anywhere; }
+  .footer-name { font-family: 'Fraunces', Georgia, serif; font-size: 1.1rem; color: #173e32; }
+  .footer-name span { font-family: 'Public Sans', sans-serif; font-size: 0.75rem; margin-left: 0.4rem; color: #b44425; }
   @media (max-width: 900px) {
-    .layout { grid-template-columns: minmax(0, 1fr); gap: 3rem; width: min(100% - 3rem, 40rem); padding-top: 3rem; }
-    .sidebar { position: static; max-height: none; overflow: visible; }
-    .introduction { position: relative; }
-    .monogram { margin: 0 0 1rem; width: 1.75rem; height: 1.75rem; }
-    h1 { font-size: 2.5rem; }
-    .location { margin-bottom: 1rem; }
-    .section-links { display: flex; flex-wrap: wrap; gap: 0.7rem 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e6ebef; }
-    .section-link { border-left: 0; padding: 0; gap: 0.45rem; }
-    .main-column { padding-top: 0; }
+    .page { width: min(100% - 3rem, 43rem); }
+    .introduction { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 3rem 0 2.25rem; }
+    h1 { font-size: 3.6rem; }
+    .name-block::after { margin-top: 1.25rem; }
+    .bio { max-width: 38rem; }
+    .project { grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); gap: 1.5rem; }
+    .project-cover { padding: 1.2rem; }
+    .project-cover h3 { font-size: 1.65rem; }
+    .information-section { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .skills-section { padding: 1.5rem; }
   }
-  @media (max-width: 480px) {
-    .layout { width: calc(100% - 2.5rem); padding-top: 2.25rem; }
-    h1 { font-size: 2.2rem; }
-    .entry-heading { flex-wrap: wrap; }
-    .entry-meta { flex-shrink: 1; }
-    .project { gap: 0.6rem; grid-template-columns: 1.25rem minmax(0, 1fr); }
-    .project-glyph :global(svg) { width: 1.2rem; height: 1.2rem; }
-    .timeline-entry { padding-left: 1.1rem; }
-    dl > div { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
-    h2 { letter-spacing: 0.045em; }
-    .section-heading { gap: 0.65rem; }
+  @media (max-width: 600px) {
+    .page { width: calc(100% - 2.5rem); }
+    header { padding-top: 1.5rem; }
+    .masthead { gap: 0.8rem 1.5rem; }
+    .identity { gap: 0.6rem; }
+    .profile-links { gap: 0.3rem 1rem; }
+    .introduction { padding-top: 2.5rem; }
+    h1 { font-size: clamp(2.6rem, 10vw, 3.6rem); }
+    .discipline { font-size: 0.8125rem; }
+    .section-links { gap: 0.3rem 1.25rem; }
+    .navigation-row { gap: 0.5rem 1.5rem; padding: 0.75rem 0; }
+    .projects-section { padding-top: 2rem; }
+    .section-note { display: none; }
+    .project { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    .project-cover { min-height: 0; padding: 1.2rem 1.3rem; }
+    .project-cover h3 { font-size: 1.8rem; margin-top: 0.8rem; }
+    .project-label { font-size: 0.75rem; }
+    .project-status { margin-top: 0.4rem; }
+    .project + .project { margin-top: 2rem; padding-top: 0; border: 0; }
+    .project-description { padding: 0; }
+    .project-bottom { margin-top: 1rem; gap: 0.6rem 1.25rem; }
+    .information-section { margin-top: 2.5rem; padding-top: 1.5rem; }
+    .skills-section { padding: 1.3rem; }
+    footer { align-items: start; gap: 0.5rem 1rem; }
   }
-  @media (max-height: 720px) { .sidebar { position: static; max-height: none; overflow: visible; } }
   @media print {
-    .layout { display: block; width: 100%; padding: 0; }
-    .sidebar { position: static; max-height: none; overflow: visible; }
-    .skip-link, .section-links, .monogram, .heading-rule, .disclosure, footer { display: none; }
+    .page { width: 100%; }
+    header { padding-top: 0; }
+    .skip-link, .masthead, .navigation-row, footer, .disclosure { display: none; }
+    .introduction { padding: 0 0 1rem; gap: 1rem; }
     h1 { font-size: 2rem; }
-    .location { margin: 0.3rem 0; }
-    .bio { margin-top: 0.5rem; }
-    .profile-links { margin: 0.5rem 0 1.5rem; }
-    .section-heading { margin-bottom: 1rem; }
-    section + section { margin-top: 1.5rem; }
-    .project, .timeline-entry { break-inside: avoid; }
+    .name-block::after { display: none; }
+    .projects-section { padding-top: 1rem; }
+    .project { grid-template-columns: 12rem minmax(0, 1fr); gap: 1.25rem; break-inside: avoid; }
+    .project-cover { background: transparent; padding: 0; min-height: 0; }
+    .project-cover h3 { font-size: 1.4rem; margin-top: 0.5rem; }
+    .project-cover a, .project-label, .project-status { color: #222; }
+    .information-section { grid-template-columns: 12rem minmax(0, 1fr); gap: 1.25rem; margin-top: 1.5rem; padding-top: 1rem; }
+    .skills-section { background: transparent; padding: 0; }
+    details, .education-entries article { break-inside: avoid; }
     details:not([open]) > .entry-description { display: block; }
-    :global(body) { color: #222; font-size: 10pt; }
+    :global(body) { background: #fff; color: #222; font-size: 10pt; }
     :global(a) { color: inherit; }
   }
 </style>
