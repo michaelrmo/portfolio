@@ -30,7 +30,6 @@
     <nav class="section-links" aria-label="On this page">
       <a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#education">Education</a>
     </nav>
-    <a class="cv-link" href={`${base}/michael-moroz-cv.pdf`} download="Michael-Moroz-CV.pdf">CV <span aria-hidden="true">↓</span></a>
   </div>
 </header>
 
@@ -113,8 +112,6 @@
   :global(body:has(#projects:target)) .section-links a[href='#projects'],
   :global(body:has(#experience:target)) .section-links a[href='#experience'],
   :global(body:has(#education:target)) .section-links a[href='#education'] { color: #923447; text-decoration: underline; }
-  .cv-link { text-decoration: none; border: 1px solid #263c30; padding: 0.2rem 0.75rem; font-size: 0.8125rem; background: #d5ed78; }
-  .cv-link span { margin-left: 0.5rem; }
   .canvas { width: min(100% - 6rem, 72rem); margin: auto; }
   .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 4rem; align-items: center; padding: 4rem 0 3.25rem; }
   .eyebrow { margin: 0 0 1.5rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.035em; }
@@ -196,7 +193,6 @@
     .topbar-inner { column-gap: 1rem; }
     .signature { font-size: 1.5rem; }
     .section-links { gap: 0.25rem 1rem; font-size: 0.75rem; }
-    .cv-link { font-size: 0.75rem; padding: 0.15rem 0.5rem; }
     .hero { grid-template-columns: minmax(0, 1fr); gap: 2.25rem; padding: 2.5rem 0 2rem; }
     h1 { font-size: clamp(2rem, 17vw, 6rem); }
     .surname { margin-left: 1.25rem; }
