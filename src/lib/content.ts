@@ -32,11 +32,11 @@ export const projects: Project[] = [
     contribution: 'Holdings and transactions are stored in SQLite. I added balance and share-quantity checks, stock lookup, and sortable portfolio and transaction views.'
   },
   {
-    name: 'Full-Stack Web Application',
+    name: 'Selenium Webscraper Dashboard',
     href: 'https://github.com/michaelrmo/dofeFullStack',
     stack: 'React, Node.js, Express, MongoDB',
     description: 'A web application with user accounts, authenticated API requests and a token-based purchase system, with Stripe payments and webhooks.',
-    contribution: 'I also configured the hosting: Docker for process isolation, Nginx as a reverse proxy, and Cloudflare in front of the application.'
+    contribution: 'Coded webscraping bots in Python with Selenium and architected 2 seperate backend servers such that the bot calling functionality was completely modular and could be redeployed anywhere'
   }
 ];
 
