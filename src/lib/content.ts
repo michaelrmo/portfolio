@@ -1,4 +1,5 @@
 export interface Project {
+  id: string;
   name: string;
   gitHref: string;
   href: string;
@@ -18,6 +19,7 @@ export const profile = {
 
 export const projects: Project[] = [
   {
+    id: 'project-panenka',
     name: 'Panenka',
     gitHref: 'https://github.com/CooperMcCloskey/Panenka',
     href:'https://panenkaball.com',
@@ -27,6 +29,7 @@ export const projects: Project[] = [
     contribution: 'I’m co-developing the game and have worked on WebSocket rooms, server-managed game state, and client prediction, reconciliation and interpolation to make online play responsive.'
   },
   {
+    id: 'project-stock-market-simulator',
     name: 'Stock Market Simulator',
     gitHref: 'https://github.com/michaelrmo/stockmarketSim',
     href:'https://github.com/michaelrmo/stockmarketSim',
@@ -35,6 +38,7 @@ export const projects: Project[] = [
     contribution: 'Holdings and transactions are stored in SQLite. I added balance and share-quantity checks, stock lookup, and sortable portfolio and transaction views.'
   },
   {
+    id: 'project-selenium-webscraper-dashboard',
     name: 'Selenium Webscraper Dashboard',
     gitHref: 'https://github.com/michaelrmo/dofeFullStack',
     href: 'https://botpulse.xyz',

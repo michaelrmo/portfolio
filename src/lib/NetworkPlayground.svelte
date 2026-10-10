@@ -1,3 +1,9 @@
+<script lang="ts">
+  import { projects } from '$lib/content';
+
+  const [greenProject, blueProject, redProject] = projects;
+</script>
+
 <figure class="playground">
   <fieldset>
     <legend>Arrange the network</legend>
@@ -7,23 +13,32 @@
       <label><input id="network-scatter" type="radio" name="network-layout" value="scatter" /><span>Scatter</span></label>
     </div>
   </fieldset>
-  <svg viewBox="0 0 400 400" aria-hidden="true" class="network">
-    <circle class="outer-ring" cx="200" cy="200" r="158" />
-    <circle class="inner-ring" cx="200" cy="200" r="106" />
+  <svg viewBox="0 0 400 400" role="group" aria-label="Project shortcuts" class="network">
+    <circle class="outer-ring" cx="200" cy="200" r="158" aria-hidden="true" />
+    <circle class="inner-ring" cx="200" cy="200" r="106" aria-hidden="true" />
     <g class="orbit">
-      <g class="connections">
+      <g class="connections" aria-hidden="true">
         <path d="M200 62 338 242 89 302 200 62 200 200 338 242M200 200 89 302" />
         <path d="M80 117 288 98 300 315 80 117 200 200 288 98M200 200 300 315" />
       </g>
-      <g class="node a"><circle cx="200" cy="62" r="24" fill="#f68655" /><circle cx="200" cy="62" r="5" /></g>
-      <g class="node b"><circle cx="338" cy="242" r="30" fill="#d5ed78" /><path d="M328 242h20m-10-10v20" /></g>
-      <g class="node c"><circle cx="89" cy="302" r="22" fill="#9cafe8" /><circle cx="89" cy="302" r="7" fill="none" /></g>
-      <g class="node d"><circle cx="80" cy="117" r="11" fill="#d5ed78" /></g>
-      <g class="node e"><circle cx="288" cy="98" r="13" fill="#9cafe8" /></g>
-      <g class="node f"><circle cx="300" cy="315" r="10" fill="#f68655" /></g>
+      <a class="node node-link a" href={'#' + redProject.id} aria-label={'Scroll to ' + redProject.name}>
+        <title>{redProject.name}</title>
+        <circle cx="200" cy="62" r="24" fill="#f68655" /><circle cx="200" cy="62" r="5" />
+      </a>
+      <a class="node node-link b" href={'#' + greenProject.id} aria-label={'Scroll to ' + greenProject.name}>
+        <title>{greenProject.name}</title>
+        <circle cx="338" cy="242" r="30" fill="#d5ed78" /><path d="M328 242h20m-10-10v20" />
+      </a>
+      <a class="node node-link c" href={'#' + blueProject.id} aria-label={'Scroll to ' + blueProject.name}>
+        <title>{blueProject.name}</title>
+        <circle cx="89" cy="302" r="22" fill="#9cafe8" /><circle cx="89" cy="302" r="7" fill="none" />
+      </a>
+      <g class="node d" aria-hidden="true"><circle cx="80" cy="117" r="11" fill="#d5ed78" /></g>
+      <g class="node e" aria-hidden="true"><circle cx="288" cy="98" r="13" fill="#9cafe8" /></g>
+      <g class="node f" aria-hidden="true"><circle cx="300" cy="315" r="10" fill="#f68655" /></g>
     </g>
-    <g class="core"><circle cx="200" cy="200" r="49" /><text x="200" y="212" text-anchor="middle">mm.</text></g>
-    <path class="crosshair" d="M200 20v12m0 336v12M20 200h12m336 0h12" />
+    <g class="core" aria-hidden="true"><circle cx="200" cy="200" r="49" /><text x="200" y="212" text-anchor="middle">mm.</text></g>
+    <path class="crosshair" d="M200 20v12m0 336v12M20 200h12m336 0h12" aria-hidden="true" />
   </svg>
   <!-- feels unncessary  -->
   <!-- <figcaption>Connections in a different arrangement.</figcaption> -->
@@ -47,6 +62,8 @@
   .node { stroke: #263c30; stroke-width: 1.5; transition: transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1); }
   .node circle + circle { fill: #263c30; }
   .node path { fill: none; }
+  .node-link { cursor: pointer; }
+  .node-link:hover > circle:first-of-type, .node-link:focus-visible > circle:first-of-type { stroke-width: 4; }
   .core circle { fill: #263c30; }
   .core text { fill: #d5ed78; font-family: 'Fraunces', Georgia, serif; font-size: 37px; letter-spacing: -3px; }
   .crosshair { stroke: #263c30; stroke-width: 1; }

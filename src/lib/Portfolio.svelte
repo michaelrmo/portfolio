@@ -54,7 +54,7 @@
       <div class="project-stack">
         {#each projects as project, index}
           {@const treatment = treatments[index] ?? treatments[2]}
-          <article class="project-sheet {treatment.colour}" style={'--tilt: ' + treatment.tilt}>
+          <article id={project.id} class="project-sheet {treatment.colour}" style={'--tilt: ' + treatment.tilt}>
             <details open>
               <summary>
                 <span class="project-heading"><span class="project-category">{treatment.name}</span><span class="project-title"><a href={project.href}> {project.name} </a></span>{#if project.note}<span class="project-status">{project.note}</span>{/if}</span>
