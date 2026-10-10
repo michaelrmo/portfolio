@@ -57,12 +57,12 @@
           <article class="project-sheet {treatment.colour}" style={'--tilt: ' + treatment.tilt}>
             <details open>
               <summary>
-                <span class="project-heading"><span class="project-category">{treatment.name}</span><span class="project-title">{project.name}</span>{#if project.note}<span class="project-status">{project.note}</span>{/if}</span>
+                <span class="project-heading"><span class="project-category">{treatment.name}</span><span class="project-title"><a href={project.href}> {project.name} </a></span>{#if project.note}<span class="project-status">{project.note}</span>{/if}</span>
                 <span class="project-mark" aria-hidden="true"><ProjectGlyph kind={treatment.glyph} /><span class="disclosure"></span></span>
               </summary>
               <div class="project-body">
                 <p>{project.description}</p><p>{project.contribution}</p>
-                <div class="project-bottom"><span>{project.stack}</span><a href={project.href} aria-label={'View ' + project.name + ' source on GitHub'}>Source on GitHub <span aria-hidden="true">↗</span></a></div>
+                <div class="project-bottom"><span>{project.stack}</span><a href={project.gitHref} aria-label={'View ' + project.name + ' source on GitHub'}>Source on GitHub <span aria-hidden="true">↗</span></a></div>
               </div>
             </details>
           </article>
